@@ -26,6 +26,7 @@ func hotspot_detect_html(w http.ResponseWriter, req *http.Request) {
 
 // http://connectivitycheck.android.com/generate_204
 func generate_204(w http.ResponseWriter, req *http.Request) {
+	w.Header().Add("Content-Length", "0")
 	w.WriteHeader(http.StatusNoContent)
 	w.Write([]byte{})
 }

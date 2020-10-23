@@ -22,7 +22,6 @@ www.msftconnecttest.com
 captive.apple.com
 connectivitycheck.gstatic.com
 connectivitycheck.android.com
-www.google.com
 connect.rom.miui.com
 network-test.debian.org
 ```
