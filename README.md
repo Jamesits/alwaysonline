@@ -4,6 +4,8 @@ Bypass NCSI and portal detection on a network level.
 
 Experimental; not tested.
 
+[![Build Status](https://dev.azure.com/nekomimiswitch/General/_apis/build/status/alwaysonline?branchName=master)](https://dev.azure.com/nekomimiswitch/General/_build/latest?definitionId=89&branchName=master)
+
 ## Usage
 
 Start the server:

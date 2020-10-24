@@ -63,7 +63,7 @@ jobs:
         export GOPATH="/tmp/go"
         export GOBIN="/opt/hostedtoolcache/go/${GOVER}/x64/bin"
         export OUT_FILE="alwaysonline-${GOOS}-${GOARCH}${FILENAME_SUFFIX}"
-        ./build.sh
+        bash ./build.sh
         cp build/alwaysonline* ${BUILD_ARTIFACTSTAGINGDIRECTORY}
       displayName: 'Build'
 
