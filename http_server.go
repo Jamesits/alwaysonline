@@ -2,14 +2,27 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 )
+
+func http_server_fallback(w http.ResponseWriter, req *http.Request) {
+	log.Printf("HTTP %s %s %s is not implemented\n", req.Method, req.Host, req.RequestURI)
+	w.WriteHeader(http.StatusNotFound)
+}
 
 // http://www.msftncsi.com/ncsi.txt
 func ncsi_txt(w http.ResponseWriter, req *http.Request) {
 	w.Header().Add("Content-Type", "text/plain")
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "Microsoft NCSI")
+}
+
+// http://www.msftconnecttest.com/connecttest.txt
+func connecttest(w http.ResponseWriter, req *http.Request) {
+	w.Header().Add("Content-Type", "text/plain; charset=utf-8")
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "Microsoft Connect Test")
 }
 
 // http://www.msftconnecttest.com/redirect

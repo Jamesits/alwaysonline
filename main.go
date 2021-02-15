@@ -3,11 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/miekg/dns"
 	"log"
 	"net"
 	"net/http"
 	"sync"
-	"github.com/miekg/dns"
 )
 
 var mainThreadWaitGroup = &sync.WaitGroup{}
@@ -59,6 +59,7 @@ func main() {
 	http.HandleFunc("/gen_204", generate_204)
 	http.HandleFunc("/nm", nm)
 	http.HandleFunc("/success.txt", success_txt)
+	http.HandleFunc("/", http_server_fallback) // catch all
 	go http.ListenAndServe(":80", nil)
 
 	dnsTcp1 := &dns.Server{Addr: ":53", Net: "tcp"}
@@ -70,9 +71,8 @@ func main() {
 	go dnsUdp1.ListenAndServe()
 
 	log.Println("Server started.")
-	
+
 	// just a normal while(1)
 	mainThreadWaitGroup.Add(1)
 	mainThreadWaitGroup.Wait()
 }
-
