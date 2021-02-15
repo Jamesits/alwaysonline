@@ -59,6 +59,7 @@ func main() {
 	http.HandleFunc("/gen_204", generate_204)
 	http.HandleFunc("/nm", nm)
 	http.HandleFunc("/success.txt", success_txt)
+	http.HandleFunc("/connecttest.txt", connecttest)
 	http.HandleFunc("/", http_server_fallback) // catch all
 	go http.ListenAndServe(":80", nil)
 
