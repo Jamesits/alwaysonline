@@ -32,3 +32,17 @@ connectivitycheck.android.com
 connect.rom.miui.com
 network-test.debian.org
 ```
+
+## Technical Details
+
+### Windows 10
+
+Service `NlaSvc` controls NCSI -- Network Connectivity Status Indicator, i.e. the tray icon on your taskbar showing whether you have Internet access. The service, when it goes wrong, is very annoying, as it will cause Microsoft Store to be unusable and all your UWP games unplayable even if you *actually* have Internet access.
+
+NCSI use a set of DNS and HTTP tests to detect if the device is connected to the Internet. The tests can be customized at `HKEY_LOCAL_MACHINE/SYSTEM/CurrentControlSet/Services/NlaSvc/Parameters/Internet`. AlwaysOnline implements the default config.
+
+For a network to trigger the NCSI tests, you need an address, network mask and DNS server to be set. For IPv6 networks, the IP address need to be a global one (in the range `2000::/3`). Sometimes you need a default gateway, but not always. 
+
+![Screenshot showing Windows 10 network connection details: IPv4 address, default gateway, DNS server set to 10.0.0.1, subnet mask 255.255.255.0; IPv6 address and DNS server set to 2000::, subnet length 64](doc/assets/windows10_20h2_ncsi.png)
+
+NCSI will cache negative results for a network, so if a network is detected to be non-Internet, NCSI will not test it for a long period, even if the network adapter is disabled then re-enabled.
