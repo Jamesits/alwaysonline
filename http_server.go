@@ -7,7 +7,7 @@ import (
 )
 
 func http_server_fallback(w http.ResponseWriter, req *http.Request) {
-	log.Printf("HTTP %s %s %s is not implemented\n", req.Method, req.Host, req.RequestURI)
+	log.Printf("[HTTP] %s \"%s%s\" is not implemented\n", req.Method, req.Host, req.RequestURI)
 	w.WriteHeader(http.StatusNotFound)
 }
 
