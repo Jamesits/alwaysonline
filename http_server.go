@@ -19,6 +19,7 @@ func ncsi_txt(w http.ResponseWriter, req *http.Request) {
 }
 
 // http://www.msftconnecttest.com/connecttest.txt
+// http://ipv6.msftconnecttest.com/connecttest.txt
 func connecttest(w http.ResponseWriter, req *http.Request) {
 	w.Header().Add("Content-Type", "text/plain; charset=utf-8")
 	w.WriteHeader(http.StatusOK)

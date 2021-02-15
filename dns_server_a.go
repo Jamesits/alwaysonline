@@ -8,13 +8,13 @@ import (
 )
 
 func handleA(this *dnsRequestHandler, r, msg *dns.Msg) {
-	log.Printf("A %s\n", msg.Question[0].Name)
+	log.Printf("[DNS] A %s\n", msg.Question[0].Name)
 
 	switch strings.ToLower(msg.Question[0].Name) {
-	case "dns.msftncsi.com":
+	case "dns.msftncsi.com.":
 		msg.Answer = append(msg.Answer, &dns.A{
 			Hdr: dns.RR_Header{Name: msg.Question[0].Name, Rrtype: r.Question[0].Qtype, Class: r.Question[0].Qclass, Ttl: DNSDefaultTTL},
-			A: net.IPv4(131,107,255,255),
+			A:   net.IPv4(131, 107, 255, 255),
 		})
 		return
 
@@ -22,7 +22,7 @@ func handleA(this *dnsRequestHandler, r, msg *dns.Msg) {
 		if localResolveIp4Enabled {
 			msg.Answer = append(msg.Answer, &dns.A{
 				Hdr: dns.RR_Header{Name: msg.Question[0].Name, Rrtype: r.Question[0].Qtype, Class: r.Question[0].Qclass, Ttl: DNSDefaultTTL},
-				A: localResolveIp4Address,
+				A:   localResolveIp4Address,
 			})
 		} else {
 			handleDefault(this, r, msg)
