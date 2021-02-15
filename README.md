@@ -30,6 +30,8 @@ captive.apple.com
 connectivitycheck.gstatic.com
 connectivitycheck.android.com
 connect.rom.miui.com
+
+// Linux
 network-test.debian.org
 ```
 
