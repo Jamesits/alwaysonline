@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-var versionMajor = 0
+var versionMajor = 1
 var versionMinor = 0
 var versionRevision = 0
 var versionGitCommitHash string
