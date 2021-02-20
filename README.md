@@ -12,7 +12,7 @@ Start the server:
 
 ```shell script
 # use docker
-docker run -p 80:80 -p 53:53 -p udp/53:53 jamesits/alwaysonline:latest [--ipv4 192.168.1.2] [--ipv6 fd00::2]
+docker run -p 80:80 -p 53:53 -p 53:53/udp jamesits/alwaysonline:latest [--ipv4 192.168.1.2] [--ipv6 fd00::2]
 
 # or download and run the executable
 alwaysonline [--ipv4 192.168.1.2] [--ipv6 fd00::2]
