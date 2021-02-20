@@ -7,6 +7,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"os"
 	"sync"
 )
 
@@ -52,16 +53,22 @@ func main() {
 		log.Printf("Local server IPv6 address: %s\n", localResolveIp6Address)
 	}
 
-	http.HandleFunc("/ncsi.txt", ncsi_txt)
-	http.HandleFunc("/redirect", redirect)
-	http.HandleFunc("/hotspot-detect.html", hotspot_detect_html)
-	http.HandleFunc("/generate_204", generate_204)
-	http.HandleFunc("/gen_204", generate_204)
-	http.HandleFunc("/nm", nm)
-	http.HandleFunc("/success.txt", success_txt)
-	http.HandleFunc("/connecttest.txt", connecttest)
-	http.HandleFunc("/", http_server_fallback) // catch all
-	go http.ListenAndServe(":80", nil)
+	mux := http.DefaultServeMux
+	loggingHandler := NewApacheLoggingHandler(mux, os.Stdout) // HTTP access log is sent to stdout for now
+	server := &http.Server{
+		Addr:    ":80",
+		Handler: loggingHandler,
+	}
+	mux.HandleFunc("/ncsi.txt", ncsi_txt)
+	mux.HandleFunc("/redirect", redirect)
+	mux.HandleFunc("/hotspot-detect.html", hotspot_detect_html)
+	mux.HandleFunc("/generate_204", generate_204)
+	mux.HandleFunc("/gen_204", generate_204)
+	mux.HandleFunc("/nm", nm)
+	mux.HandleFunc("/success.txt", success_txt)
+	mux.HandleFunc("/connecttest.txt", connecttest)
+	mux.HandleFunc("/", http_server_fallback) // catch all
+	go server.ListenAndServe()
 
 	dnsTcp1 := &dns.Server{Addr: ":53", Net: "tcp"}
 	dnsTcp1.Handler = &dnsRequestHandler{}
