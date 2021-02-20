@@ -25,7 +25,9 @@ func handleA(this *dnsRequestHandler, r, msg *dns.Msg) {
 				A:   localResolveIp4Address,
 			})
 		} else {
-			handleDefault(this, r, msg)
+			msg.Answer = append(msg.Answer, &dns.A{
+				Hdr: dns.RR_Header{Name: msg.Question[0].Name, Rrtype: r.Question[0].Qtype, Class: r.Question[0].Qclass, Ttl: DNSDefaultTTL},
+			})
 		}
 		return
 	}

@@ -25,7 +25,9 @@ func handleAAAA(this *dnsRequestHandler, r, msg *dns.Msg) {
 				AAAA: localResolveIp6Address,
 			})
 		} else {
-			handleDefault(this, r, msg)
+			msg.Answer = append(msg.Answer, &dns.AAAA{
+				Hdr:  dns.RR_Header{Name: msg.Question[0].Name, Rrtype: r.Question[0].Qtype, Class: r.Question[0].Qclass, Ttl: DNSDefaultTTL},
+			})
 		}
 		return
 	}
