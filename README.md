@@ -110,6 +110,8 @@ For a network to trigger the NCSI tests, you need an address, network mask and D
 
 NCSI will cache negative results for a network, so if a network is detected to be non-Internet, NCSI will not test it for a long period, even if the network adapter is disabled then re-enabled.
 
+If you don't want to deploy a server or you don't have a suitable LAN environment, [NCSIOverride](https://github.com/dantmnf/NCSIOverride) can be used to fake NCSI results on a single machine.
+
 ### About Android
 
 Stock Android 7.1.1 or later will connect to both HTTP and HTTPS endpoints for internet detection. AlwaysOnline does not implement the HTTPS server due to obvious reasons. 
