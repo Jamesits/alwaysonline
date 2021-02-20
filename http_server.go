@@ -31,6 +31,13 @@ func http_server_fallback(w http.ResponseWriter, req *http.Request) {
 	}
 }
 
+// /robots.txt
+func robots_txt(w http.ResponseWriter, req *http.Request) {
+	w.Header().Add("Content-Type", "text/plain; charset=utf-8")
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprint(w, "User-agent: *\nDisallow: /\n")
+}
+
 // http://www.msftncsi.com/ncsi.txt
 func ncsi_txt(w http.ResponseWriter, req *http.Request) {
 	w.Header().Add("Content-Type", "text/plain")

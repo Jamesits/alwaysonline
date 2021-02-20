@@ -59,6 +59,7 @@ func main() {
 		Addr:    ":80",
 		Handler: loggingHandler,
 	}
+	mux.HandleFunc("/robots.txt", robots_txt)
 	mux.HandleFunc("/ncsi.txt", ncsi_txt)
 	mux.HandleFunc("/redirect", redirect)
 	mux.HandleFunc("/hotspot-detect.html", hotspot_detect_html)
