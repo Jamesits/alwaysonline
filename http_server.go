@@ -9,6 +9,7 @@ import (
 
 func http_server_fallback(w http.ResponseWriter, req *http.Request) {
 	host := strings.ToLower(req.Host)
+
 	if host == "captive.apple.com" {
 		hotspot_detect_html(w, req)
 		return
@@ -19,12 +20,15 @@ func http_server_fallback(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	// mock the redirect
 	if host == "www.archlinux.org" {
 		w.Header().Add("Location", "https://archlinux.org"+req.RequestURI)
 		w.WriteHeader(http.StatusMovedPermanently)
 		fmt.Fprint(w, "<html>\n<head><title>301 Moved Permanently</title></head>\n<body>\n<center><h1>301 Moved Permanently</h1></center>\n<hr><center>nginx</center>\n</body>\n</html>\n")
+		return
 	}
 
+	// fallback
 	log.Printf("[HTTP] not implemented: %s %s => \"%s%s\"\n", req.Method, req.RemoteAddr, req.Host, req.RequestURI)
 	w.WriteHeader(http.StatusNotFound)
 }
