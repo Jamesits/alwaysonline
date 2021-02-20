@@ -11,12 +11,16 @@ Ports required: tcp/80, tcp/53, udp/53.
 Start the server:
 
 ```shell script
+# use docker
+docker run -p 80:80 -p 53:53 -p udp/53:53 jamesits/alwaysonline:latest [--ipv4 192.168.1.2] [--ipv6 fd00::2]
+
+# or download and run the executable
 alwaysonline [--ipv4 192.168.1.2] [--ipv6 fd00::2]
 ```
 
-(The IP addresses are the server IP addresses on the user-facing interface. If the server is behind destination NAT, use the public IP. The server will always listen on all the IPs available; these IP hints are just for faking DNS results.)
+(The IP addresses supplied via the command line arguments are for generating fake DNS results, so they have to be the IP address end users use to connect to the server. If the server is behind destination NAT, use the IP address of the public side. )
 
-Hijack the following domains on your DNS server to the alwaysonline server:
+Hijack (delegate) the following domains on your DNS server to the alwaysonline server:
 
 ```
 // Windows
