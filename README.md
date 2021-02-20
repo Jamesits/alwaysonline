@@ -96,7 +96,7 @@ I acknowledge this is not the best way to implement HA, but it is simple enough 
 
 ### Extensibility
 
-AlwaysOnline replies any URL segments it recogonizes, regardless of which domain it comes from. If your client speaks a protocol AlwaysOnline recognizes but on a different domain, simply add another delegation on your DNS server and everything should work.
+AlwaysOnline replies any URL segments it recognizes, regardless of which domain it comes from. If your client speaks a protocol AlwaysOnline implements but on a different domain, simply add another delegation on your DNS server and everything should work.
 
 ### About Windows 10 NCSI Service
 
