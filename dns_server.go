@@ -66,6 +66,10 @@ func (this *dnsRequestHandler) ServeDNS(w dns.ResponseWriter, r *dns.Msg) {
 			handleAAAA(this, r, msg)
 			return
 
+		case dns.TypeSOA:
+			handleSOA(this, r, msg)
+			return
+
 		default:
 			handleDefault(this, r, msg)
 			return
