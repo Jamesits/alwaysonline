@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/miekg/dns"
 	"log"
+	"strings"
 )
 
 func handleSOA(this *dnsRequestHandler, r, msg *dns.Msg) {
