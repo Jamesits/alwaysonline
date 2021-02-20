@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-const DNSDefaultTTL = 2147483647
+const DNSDefaultTTL = 1
 type dnsRequestHandler struct{}
 
 func newDNSReplyMsg() *dns.Msg {
