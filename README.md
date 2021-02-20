@@ -31,12 +31,17 @@ msftconnecttest.com
 captive.apple.com
 
 // Android
+clients3.google.com
 connectivitycheck.gstatic.com
 connectivitycheck.android.com
 connect.rom.miui.com
+connectivitycheck.platform.hicloud.com
 
 // Linux
 network-test.debian.org
+nmcheck.gnome.org
+www.archlinux.org (DO NOT hijack archlinux.org or other subdomains)
+capnet.elementary.io
 ```
 
 ## Technical Details

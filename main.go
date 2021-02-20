@@ -36,21 +36,21 @@ func main() {
 	if len(*localResolveIp4AddressString) == 0 {
 		localResolveIp4Enabled = false
 		localResolveIp4Address = net.ParseIP("0.0.0.0")
-		log.Println("IPv4 resolution disabled")
+		log.Println("[CONFIG] IPv4 resolution disabled")
 	} else {
 		localResolveIp4Enabled = true
 		localResolveIp4Address = net.ParseIP(*localResolveIp4AddressString)
-		log.Printf("Local server IPv4 address: %s\n", localResolveIp4Address)
+		log.Printf("[CONFIG] Local server IPv4 address: %s\n", localResolveIp4Address)
 	}
 
 	if len(*localResolveIp6AddressString) == 0 {
 		localResolveIp6Enabled = false
 		localResolveIp6Address = net.ParseIP("::")
-		log.Println("IPv6 resolution disabled")
+		log.Println("[CONFIG] IPv6 resolution disabled")
 	} else {
 		localResolveIp6Enabled = true
 		localResolveIp6Address = net.ParseIP(*localResolveIp6AddressString)
-		log.Printf("Local server IPv6 address: %s\n", localResolveIp6Address)
+		log.Printf("[CONFIG] Local server IPv6 address: %s\n", localResolveIp6Address)
 	}
 
 	mux := http.DefaultServeMux
@@ -65,8 +65,10 @@ func main() {
 	mux.HandleFunc("/generate_204", generate_204)
 	mux.HandleFunc("/gen_204", generate_204)
 	mux.HandleFunc("/nm", nm)
+	mux.HandleFunc("/check_network_status.txt", nm)
 	mux.HandleFunc("/success.txt", success_txt)
 	mux.HandleFunc("/connecttest.txt", connecttest)
+	mux.HandleFunc("/connectivity-check.html", connectivity_check_html)
 	mux.HandleFunc("/", http_server_fallback) // catch all
 	go server.ListenAndServe()
 
@@ -78,7 +80,7 @@ func main() {
 	dnsUdp1.Handler = &dnsRequestHandler{}
 	go dnsUdp1.ListenAndServe()
 
-	log.Println("Server started.")
+	log.Println("[MAIN] Server started.")
 
 	// just a normal while(1)
 	mainThreadWaitGroup.Add(1)
