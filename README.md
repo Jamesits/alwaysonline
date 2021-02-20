@@ -90,7 +90,7 @@ Exposing AlwaysOnline directly to the internet is not recommended, mainly becaus
 
 ### Extensibility
 
-AlwaysOnline replies any URL segments it recogonizes, regardless of which domain it comes from. If your client speaks a protocol AlwaysOnline recognizes but on a different domain, simply add another delegation on your DNS server and everything will work.
+AlwaysOnline replies any URL segments it recogonizes, regardless of which domain it comes from. If your client speaks a protocol AlwaysOnline recognizes but on a different domain, simply add another delegation on your DNS server and everything should work.
 
 ### About Windows 10 NCSI Service
 
