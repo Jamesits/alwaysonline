@@ -20,8 +20,8 @@ Hijack the following domains on your DNS server to the alwaysonline server:
 
 ```
 // Windows
-www.msftncsi.com
-www.msftconnecttest.com
+msftncsi.com
+msftconnecttest.com
 
 // iOS, macOS
 captive.apple.com
