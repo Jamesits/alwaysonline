@@ -4,10 +4,16 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 )
 
 func http_server_fallback(w http.ResponseWriter, req *http.Request) {
-	log.Printf("[HTTP] %s \"%s%s\" is not implemented\n", req.Method, req.Host, req.RequestURI)
+	if strings.ToLower(req.Host) == "captive.apple.com" {
+		hotspot_detect_html(w, req)
+		return
+	}
+
+	log.Printf("[HTTP] not implemented: %s %s => \"%s%s\"\n", req.Method, req.RemoteAddr, req.Host, req.RequestURI)
 	w.WriteHeader(http.StatusNotFound)
 }
 
