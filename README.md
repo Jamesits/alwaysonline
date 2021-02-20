@@ -20,7 +20,7 @@ alwaysonline --ipv4 192.168.1.2 --ipv6 fd00::2
 
 (The IP addresses supplied via the command line arguments are for generating fake DNS results, so they have to be the IP address end users use to connect to the server. If the server is behind destination NAT, use the IP address of the public side. If one address family is not configured in your network, omit it.)
 
-Hijack (delegate) the following domains (including subdomains) on your DNS server to the AlwaysOnline server:
+Hijack (delegate) the following domains (including subdomains) on your DNS server to the AlwaysOnline server (and disable DNSSEC verification if possible):
 
 ```
 // Windows

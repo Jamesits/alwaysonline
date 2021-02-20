@@ -7,14 +7,14 @@ trigger:
   branches:
     include: [ "master", "develop" ]
   paths:
-    exclude: [ "README.md", "LICENSE", ".github/*", "examples/*", ".golangci.yml" ]
+    exclude: [ "README.md", "LICENSE", ".github/*", "examples/*", ".golangci.yml", ".idea/*", "doc/*" ]
 
 pr:
   autoCancel: true
   branches:
     include: [ "master", "develop" ]
   paths:
-    exclude: [ "README.md", "LICENSE", ".github/*", "examples/*", ".golangci.yml" ]
+    exclude: [ "README.md", "LICENSE", ".github/*", "examples/*", ".golangci.yml", ".idea/*", "doc/*" ]
 
 jobs:
   - job: binary
