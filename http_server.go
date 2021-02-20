@@ -8,29 +8,27 @@ import (
 )
 
 func http_server_fallback(w http.ResponseWriter, req *http.Request) {
-	host := strings.ToLower(req.Host)
-
-	if host == "captive.apple.com" {
+	switch strings.ToLower(req.Host) {
+	case "captive.apple.com":
 		hotspot_detect_html(w, req)
 		return
-	}
 
-	if host == "capnet.elementary.io" {
+	case "capnet.elementary.io":
 		capnet(w, req)
 		return
-	}
 
-	// mock the redirect
-	if host == "www.archlinux.org" {
+	case "www.archlinux.org":
+		// mock the redirect
 		w.Header().Add("Location", "https://archlinux.org"+req.RequestURI)
 		w.WriteHeader(http.StatusMovedPermanently)
 		fmt.Fprint(w, "<html>\n<head><title>301 Moved Permanently</title></head>\n<body>\n<center><h1>301 Moved Permanently</h1></center>\n<hr><center>nginx</center>\n</body>\n</html>\n")
 		return
-	}
 
-	// fallback
-	log.Printf("[HTTP] not implemented: %s %s => \"%s%s\"\n", req.Method, req.RemoteAddr, req.Host, req.RequestURI)
-	w.WriteHeader(http.StatusNotFound)
+	default:
+		// fallback to a 404 page
+		log.Printf("[HTTP] not implemented: %s %s => \"%s%s\"\n", req.Method, req.RemoteAddr, req.Host, req.RequestURI)
+		w.WriteHeader(http.StatusNotFound)
+	}
 }
 
 // http://www.msftncsi.com/ncsi.txt
