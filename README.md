@@ -88,6 +88,12 @@ AlwaysOnline need `cap_net_bind_service=+ep` to listen on ports 53 and 80 as a n
 
 Exposing AlwaysOnline directly to the internet is not recommended, mainly because DNS/UDP can passively anticipate in an amplification/reflection DDoS attack. AlwaysOnline does not implement any rate limiting or abnormal client blocking mechanism.
 
+### High Availability
+
+AlwaysOnline is stateless, so it is possible to run multiple instances to accommodate your high availability needs. Failover is realized by a 1-second DNS cache TTL and your own DNS server's failover capability. 
+
+I acknowledge this is not the best way to implement HA, but it is simple enough and enough for casual deployments. If you use AlwaysOnline in a mission-critical environment, then external load balancer with upstream health check (e.g. Nginx or HAProxy) and/or distributed container orchestration tools (e.g. Docker Swarm Mode or Kubernetes) are recommended. 
+
 ### Extensibility
 
 AlwaysOnline replies any URL segments it recogonizes, regardless of which domain it comes from. If your client speaks a protocol AlwaysOnline recognizes but on a different domain, simply add another delegation on your DNS server and everything should work.
