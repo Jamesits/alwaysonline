@@ -26,13 +26,15 @@ func handleA(this *dnsRequestHandler, r, msg *dns.Msg) {
 		})
 		return
 
-	default: // for everything else, resolve to our own IP address
+	default:
 		if localResolveIp4Enabled {
+			// for everything else, resolve to our own IP address
 			msg.Answer = append(msg.Answer, &dns.A{
 				Hdr: dns.RR_Header{Name: msg.Question[0].Name, Rrtype: r.Question[0].Qtype, Class: r.Question[0].Qclass, Ttl: DNSDefaultTTL},
 				A:   localResolveIp4Address,
 			})
 		} else {
+			// IPv4 not configured, reply empty answer
 			msg.Answer = append(msg.Answer, &dns.A{
 				Hdr: dns.RR_Header{Name: msg.Question[0].Name, Rrtype: r.Question[0].Qtype, Class: r.Question[0].Qclass, Ttl: DNSDefaultTTL},
 			})
