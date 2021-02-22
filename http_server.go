@@ -24,6 +24,11 @@ func http_server_fallback(w http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(w, "<html>\n<head><title>301 Moved Permanently</title></head>\n<body>\n<center><h1>301 Moved Permanently</h1></center>\n<hr><center>nginx</center>\n</body>\n</html>\n")
 		return
 
+	case "connectivitycheck.platform.hicloud.com":
+		// Huawei phones generate requests like "connectivitycheck.platform.hicloud.com/generate_204_1ee9b362-b226-4c81-bffe-6708fa241ab8"
+		generate_204(w, req)
+		return
+
 	default:
 		// fallback to a 404 page
 		log.Printf("[HTTP] not implemented: %s %s => \"%s%s\"\n", req.Method, req.RemoteAddr, req.Host, req.RequestURI)
@@ -73,7 +78,6 @@ func hotspot_detect_html(w http.ResponseWriter, req *http.Request) {
 // http://connectivitycheck.gstatic.com/generate_204
 // http://connectivitycheck.android.com/generate_204
 // http://connect.rom.miui.com/generate_204
-// http://connectivitycheck.platform.hicloud.com/generate_204
 func generate_204(w http.ResponseWriter, req *http.Request) {
 	w.Header().Add("Content-Length", "0")
 	w.WriteHeader(http.StatusNoContent)
