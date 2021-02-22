@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-	"io"
 	"github.com/miekg/dns"
 	"log"
 )
