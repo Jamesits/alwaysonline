@@ -22,7 +22,7 @@ type ApacheLogRecord struct {
 
 func (r *ApacheLogRecord) Log(out io.Writer) {
 	timeFormatted := r.time.Format("02/Jan/2006 03:04:05")
-	fmt.Fprintf(out, "%s - - [%s] \"%s %s %s %d %d\" %f\n", r.ip, timeFormatted, r.method, r.uri, r.protocol, r.status, r.responseBytes, r.elapsedTime.Seconds())
+	fmt.Fprintf(out, "[HTTP] %s - - [%s] \"%s %s %s %d %d\" %f\n", r.ip, timeFormatted, r.method, r.uri, r.protocol, r.status, r.responseBytes, r.elapsedTime.Seconds())
 }
 
 func (r *ApacheLogRecord) Write(p []byte) (int, error) {

@@ -8,8 +8,6 @@ import (
 )
 
 func handleA(this *dnsRequestHandler, r, msg *dns.Msg) {
-	log.Printf("[DNS] A %s\n", msg.Question[0].Name)
-
 	switch strings.ToLower(msg.Question[0].Name) {
 	case "dns.msftncsi.com.":
 		msg.Answer = append(msg.Answer, &dns.A{
