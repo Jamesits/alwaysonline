@@ -41,7 +41,7 @@ func finishAnswer(w *dns.ResponseWriter, r *dns.Msg) {
 	}
 
 	// access log to stdout
-	fmt.Printf("[DNS] C%d Q%d R%d %s => %s\n", r.Question[0].Qclass, r.Question[0].Qtype, r.Rcode, &w.RemoteAddr(), r.Question[0].Name)
+	fmt.Printf("[DNS] C=%d Q=%d R=%d DOMAIN=%s %s => %s\n", r.Question[0].Qclass, r.Question[0].Qtype, r.Rcode, r.Question[0].Name, (*w).RemoteAddr(), (*w).LocalAddr())
 }
 
 // TODO: force TCP for 1) clients which requests too fast; 2) non-existent answers
