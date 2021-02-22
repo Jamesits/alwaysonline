@@ -21,6 +21,8 @@ var localResolveIp6Enabled bool
 var showVersionOnly *bool
 
 func main() {
+
+	// arguments parsing
 	localResolveIp4AddressString = flag.String("ipv4", "", "the IPv4 address to this server")
 	localResolveIp6AddressString = flag.String("ipv6", "", "the IPv6 address to this server")
 	showVersionOnly = flag.Bool("version", false, "show version and quit")
@@ -53,12 +55,8 @@ func main() {
 		log.Printf("[CONFIG] Local server IPv6 address: %s\n", localResolveIp6Address)
 	}
 
+	// HTTP router setup
 	mux := http.DefaultServeMux
-	loggingHandler := NewApacheLoggingHandler(mux, os.Stdout) // HTTP access log is sent to stdout for now
-	server := &http.Server{
-		Addr:    ":80",
-		Handler: loggingHandler,
-	}
 	mux.HandleFunc("/robots.txt", robots_txt)
 	mux.HandleFunc("/ncsi.txt", ncsi_txt)
 	mux.HandleFunc("/redirect", redirect)
@@ -71,16 +69,39 @@ func main() {
 	mux.HandleFunc("/connecttest.txt", connecttest)
 	mux.HandleFunc("/connectivity-check.html", connectivity_check_html)
 	mux.HandleFunc("/", http_server_fallback) // catch all
-	go server.ListenAndServe()
 
+	// HTTP logger setup
+	loggingHandler := NewApacheLoggingHandler(mux, os.Stdout) // HTTP access log is sent to stdout for now
+
+	// HTTP server setup
+	plainHttpServer := &http.Server{
+		Addr:    ":80",
+		Handler: loggingHandler,
+	}
+	go plainHttpServer.ListenAndServe()
+
+	// HTTPS server setup
+	// tlsHttpServer := &http.Server{
+	// 	Addr:     ":443",
+	// 	Handler:  loggingHandler,
+	// 	TLSConfig: &tls.Config{
+	// 		GetCertificate: ,
+	// 		// ...
+	// 	}
+	// }
+	// go tlsHttpServer.ListenAndServe()
+
+	// DNS TCP server setup
 	dnsTcp1 := &dns.Server{Addr: ":53", Net: "tcp"}
 	dnsTcp1.Handler = &dnsRequestHandler{}
 	go dnsTcp1.ListenAndServe()
 
+	// DNS UDP server setup
 	dnsUdp1 := &dns.Server{Addr: ":53", Net: "udp"}
 	dnsUdp1.Handler = &dnsRequestHandler{}
 	go dnsUdp1.ListenAndServe()
 
+	// done
 	log.Println("[MAIN] Server started.")
 
 	// just a normal while(1)

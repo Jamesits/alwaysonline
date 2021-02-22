@@ -25,7 +25,8 @@ func http_server_fallback(w http.ResponseWriter, req *http.Request) {
 		return
 
 	case "connectivitycheck.platform.hicloud.com":
-		// Huawei phones generate requests like "connectivitycheck.platform.hicloud.com/generate_204_1ee9b362-b226-4c81-bffe-6708fa241ab8"
+		// Huawei phones generate requests like "http://connectivitycheck.platform.hicloud.com/generate_204_1ee9b362-b226-4c81-bffe-6708fa241ab8"
+		// and the UUID is different every time
 		generate_204(w, req)
 		return
 
