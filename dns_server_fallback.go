@@ -5,8 +5,16 @@ import (
 	"log"
 )
 
-// simply replies NOTIMPL
+// all unknown DNS requests are processed here
 func handleDefault(this *dnsRequestHandler, r, msg *dns.Msg) {
 	log.Printf("[DNS] %d %s not implemented\n", msg.Question[0].Qtype, msg.Question[0].Name)
-	msg.Rcode = dns.RcodeNotImplemented
+
+	if msg.RecursionDesired {
+		// Refused
+		msg.RecursionAvailable = false
+		msg.Rcode = dns.RcodeRefused
+	} else {
+		// NotImp
+		msg.Rcode = dns.RcodeNotImplemented
+	}
 }
