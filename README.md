@@ -102,7 +102,7 @@ AlwaysOnline replies to any URL segments it recognizes, regardless of which doma
 
 Service `NlaSvc` controls NCSI -- Network Connectivity Status Indicator, i.e. the tray icon on your taskbar showing whether you have Internet access. The service, when it goes wrong, is very annoying, as it will cause Microsoft Store to be unusable and all your UWP games unplayable even if you *actually* have Internet access.
 
-NCSI use a set of DNS and HTTP tests to detect if the device is connected to the Internet. The tests can be customized at `HKEY_LOCAL_MACHINE/SYSTEM/CurrentControlSet/Services/NlaSvc/Parameters/Internet`. AlwaysOnline implements the default config. (BTW, Windows 10 CMGE have the same NCSI config as every other Windows 10. )
+NCSI use a set of DNS and HTTP tests to detect if the device is connected to the Internet. The tests can be customized at `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet`. AlwaysOnline implements the default config. (BTW, Windows 10 CMGE have the same NCSI config as every other Windows 10. )
 
 For a network to trigger the NCSI tests, you need an address, network mask and DNS server to be set. For IPv6 networks, the IP address need to be a global one (in the range `2000::/3`). Sometimes you need a default gateway, but not always. 
 
