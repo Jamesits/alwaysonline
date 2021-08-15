@@ -43,6 +43,7 @@ connectivitycheck.gstatic.com
 connectivitycheck.android.com
 connect.rom.miui.com
 connectivitycheck.platform.hicloud.com
+// www.googleapis.cn (for MCC=460 sim cards only; might impact other services; not recommended; see https://cs.android.com/android/platform/superproject/+/master:packages/modules/NetworkStack/res/values-mcc460/config.xml?q=values-mcc460)
 
 // Linux
 network-test.debian.org
