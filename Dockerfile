@@ -1,5 +1,5 @@
 # build stage
-FROM golang:1.15.3-buster as builder
+FROM golang:1.17.9-bullseye as builder
 
 WORKDIR /root/alwaysonline
 COPY . /root/alwaysonline/

@@ -1,0 +1,14 @@
+services:
+  alwaysonline:
+    build: "."
+    image: "jamesits/alwaysonline:latest"
+    restart: "unless-stopped"
+    ports:
+      - "80:80/tcp"
+      - "53:53/tcp"
+      - "53:53/udp"
+    cap_add:
+      - "NET_BIND_SERVICE"
+    cap_drop:
+      - "ALL"
+    command: "--ipv4 192.168.1.2 --ipv6 fd00::2" # replace with your host's IP address
