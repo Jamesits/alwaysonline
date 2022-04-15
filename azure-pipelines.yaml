@@ -20,7 +20,7 @@ jobs:
   - job: binary
     displayName: "binary build"
     pool:
-      vmImage: "ubuntu-16.04"
+      vmImage: "ubuntu-latest"
     workspace:
       clean: all
     timeoutInMinutes: 15
