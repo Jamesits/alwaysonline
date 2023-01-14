@@ -8,6 +8,7 @@ import (
 	"net"
 	"net/http"
 	"os"
+	"strconv"
 	"sync"
 )
 
@@ -18,6 +19,9 @@ var localResolveIp4Enabled bool
 var localResolveIp6AddressString *string
 var localResolveIp6Address net.IP
 var localResolveIp6Enabled bool
+var localResolvePortString *string
+var localResolvePort int
+var localResolvePortInvaild bool
 var showVersionOnly *bool
 
 func main() {
@@ -25,6 +29,7 @@ func main() {
 	// arguments parsing
 	localResolveIp4AddressString = flag.String("ipv4", "", "the IPv4 address to this server")
 	localResolveIp6AddressString = flag.String("ipv6", "", "the IPv6 address to this server")
+	localResolvePortString = flag.String("port", "", "listening port of server")
 	showVersionOnly = flag.Bool("version", false, "show version and quit")
 	flag.Parse()
 
@@ -55,6 +60,17 @@ func main() {
 		log.Printf("[CONFIG] Local server IPv6 address: %s\n", localResolveIp6Address)
 	}
 
+	if len(*localResolvePortString) == 0 {
+		localResolvePort = 80
+		log.Println("[CONFIG] Listen port: 80")
+	} else {
+		localResolvePort, localResolvePortInvaild = parsePort(*localResolvePortString)
+		if localResolvePortInvaild || localResolvePort == 0 {
+			localResolvePort = 80
+		}
+		log.Printf("[CONFIG] Listen port: %d\n", localResolvePort)
+	}
+
 	// HTTP router setup
 	mux := http.DefaultServeMux
 	mux.HandleFunc("/robots.txt", robots_txt)
@@ -76,7 +92,7 @@ func main() {
 
 	// HTTP server setup
 	plainHttpServer := &http.Server{
-		Addr:    ":80",
+		Addr:    ":" + strconv.Itoa(localResolvePort),
 		Handler: loggingHandler,
 	}
 	go plainHttpServer.ListenAndServe()
