@@ -64,6 +64,7 @@ func main() {
 	mux.HandleFunc("/generate_204", generate_204)
 	mux.HandleFunc("/gen_204", generate_204)
 	mux.HandleFunc("/nm", nm)
+	mux.HandleFunc("/nm-check.txt", nm)
 	mux.HandleFunc("/check_network_status.txt", nm)
 	mux.HandleFunc("/success.txt", success_txt)
 	mux.HandleFunc("/connecttest.txt", connecttest)
