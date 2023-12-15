@@ -24,6 +24,10 @@ func http_server_fallback(w http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(w, "<html>\n<head><title>301 Moved Permanently</title></head>\n<body>\n<center><h1>301 Moved Permanently</h1></center>\n<hr><center>nginx</center>\n</body>\n</html>\n")
 		return
 
+	case "networkcheck.kde.org":
+		ok_upcase(w, req)
+		return
+
 	case "connectivitycheck.platform.hicloud.com":
 		// Huawei phones generate requests like "http://connectivitycheck.platform.hicloud.com/generate_204_1ee9b362-b226-4c81-bffe-6708fa241ab8"
 		// and the UUID is different every time
@@ -86,12 +90,20 @@ func generate_204(w http.ResponseWriter, req *http.Request) {
 }
 
 // http://network-test.debian.org/nm
+// http://ping.archlinux.org/nm-check.txt
 // http://nmcheck.gnome.org/check_network_status.txt
 // http://www.archlinux.org/check_network_status.txt
 func nm(w http.ResponseWriter, req *http.Request) {
 	w.Header().Add("X-NetworkManager-Status", "online")
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprint(w, "NetworkManager is online\n")
+}
+
+// http://networkcheck.kde.org
+func ok_upcase(w http.ResponseWriter, req *http.Request) {
+	w.Header().Add("X-NetworkManager-Status", "online")
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprint(w, "OK\n")
 }
 
 // http://detectportal.firefox.com/success.txt
