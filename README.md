@@ -109,7 +109,7 @@ For a network to trigger the NCSI tests, you need an address, network mask and D
 
 ![Screenshot showing Windows 10 network connection details: IPv4 address, default gateway, DNS server set to 10.0.0.1, subnet mask 255.255.255.0; IPv6 address and DNS server set to 2000::, subnet length 64](doc/assets/windows10_20h2_ncsi.png)
 
-NCSI will cache negative results for a network, so if a network is detected to be non-Internet, NCSI will not test it for a long period, even if the network adapter is disabled then re-enabled.
+[NCSI will cache negative results for a network](https://web.archive.org/web/20230815184404/https://learn.microsoft.com/en-us/answers/questions/400385/network-location-awareness-not-detecting-domain-ne), so if a network is detected to be non-Internet, NCSI will not test it for a long period, even if the network adapter is disabled then re-enabled.
 
 If you don't want to deploy a server or you don't have a suitable LAN environment, [NCSIOverride](https://github.com/dantmnf/NCSIOverride) can be used to fake NCSI results on a single machine.
 
