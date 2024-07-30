@@ -8,7 +8,6 @@ import (
 	"net"
 	"net/http"
 	"os"
-	"strconv"
 	"sync"
 )
 
@@ -91,11 +90,15 @@ func main() {
 	loggingHandler := NewApacheLoggingHandler(mux, os.Stdout) // HTTP access log is sent to stdout for now
 
 	// HTTP server setup
-	plainHttpServer := &http.Server{
-		Addr:    ":" + strconv.Itoa(localResolvePort),
-		Handler: loggingHandler,
+	if !(localResolveIp4Enabled || localResolveIp6Enabled) {
+		openPlainHttpServer(fmt.Sprintf(":%d", localResolvePort), loggingHandler)
 	}
-	go plainHttpServer.ListenAndServe()
+	if localResolveIp4Enabled {
+		openPlainHttpServer(fmt.Sprintf("%s:%d", localResolveIp4Address.String(), localResolvePort), loggingHandler)
+	}
+	if localResolveIp6Enabled {
+		openPlainHttpServer(fmt.Sprintf("[%s]:%d", localResolveIp6Address.String(), localResolvePort), loggingHandler)
+	}
 
 	// HTTPS server setup
 	// tlsHttpServer := &http.Server{
@@ -124,4 +127,12 @@ func main() {
 	// just a normal while(1)
 	mainThreadWaitGroup.Add(1)
 	mainThreadWaitGroup.Wait()
+}
+
+func openPlainHttpServer(addr string, handler http.Handler) {
+	plainHttpServer := &http.Server{
+		Addr:    addr,
+		Handler: handler,
+	}
+	go plainHttpServer.ListenAndServe()
 }
