@@ -1,12 +1,12 @@
 # build stage
-FROM golang:1.17.9-bullseye as builder
+FROM golang:1.23.2-bookworm AS builder
 
 WORKDIR /root/alwaysonline
 COPY . /root/alwaysonline/
 RUN bash ./build.sh
 
 # production stage
-FROM debian:buster-slim
+FROM debian:bookworm-slim
 LABEL maintainer="docker@public.swineson.me"
 
 # Import the user and group files from the builder.
