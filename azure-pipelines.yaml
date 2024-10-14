@@ -43,10 +43,10 @@ jobs:
           GOOS: 'windows'
           GOARCH: 'amd64'
           FILENAME_SUFFIX: '.exe'
-        darwin-amd64:
-          GOOS: 'darwin'
-          GOARCH: 'amd64'
-          FILENAME_SUFFIX: ''
+#        darwin-amd64: # disabled as golang net/internal/socket has a breaking change in 1.23 https://github.com/bettercap/bettercap/issues/1106
+#          GOOS: 'darwin'
+#          GOARCH: 'amd64'
+#          FILENAME_SUFFIX: ''
 
     steps:
     - task: GoTool@0
