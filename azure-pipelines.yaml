@@ -1,6 +1,6 @@
 name: $(SourceBranchName)-$(Date:yyyyMMdd).$(Rev:r)
 variables:
-  GOVER: '1.17.9'
+  GOVER: '1.23.2'
 
 trigger:
   batch: true
