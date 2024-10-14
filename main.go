@@ -12,6 +12,7 @@ import (
 )
 
 var mainThreadWaitGroup = &sync.WaitGroup{}
+var disableDNSServer bool
 var localResolveIp4AddressString *string
 var localResolveIp4Address net.IP
 var localResolveIp4Enabled bool
@@ -26,6 +27,7 @@ var showVersionOnly *bool
 func main() {
 
 	// arguments parsing
+	flag.BoolVar(&disableDNSServer, "disable-dns-server", false, "disable DNS server")
 	localResolveIp4AddressString = flag.String("ipv4", "", "the IPv4 address to this server")
 	localResolveIp6AddressString = flag.String("ipv6", "", "the IPv6 address to this server")
 	localResolvePortString = flag.String("port", "", "listening port of server")
@@ -111,15 +113,19 @@ func main() {
 	// }
 	// go tlsHttpServer.ListenAndServe()
 
-	// DNS TCP server setup
-	dnsTcp1 := &dns.Server{Addr: ":53", Net: "tcp"}
-	dnsTcp1.Handler = &dnsRequestHandler{}
-	go dnsTcp1.ListenAndServe()
+	if !disableDNSServer {
+		// DNS TCP server setup
+		dnsTcp1 := &dns.Server{Addr: ":53", Net: "tcp"}
+		dnsTcp1.Handler = &dnsRequestHandler{}
+		go dnsTcp1.ListenAndServe()
 
-	// DNS UDP server setup
-	dnsUdp1 := &dns.Server{Addr: ":53", Net: "udp"}
-	dnsUdp1.Handler = &dnsRequestHandler{}
-	go dnsUdp1.ListenAndServe()
+		// DNS UDP server setup
+		dnsUdp1 := &dns.Server{Addr: ":53", Net: "udp"}
+		dnsUdp1.Handler = &dnsRequestHandler{}
+		go dnsUdp1.ListenAndServe()
+	} else {
+		log.Println("[MAIN] not starting DNS server")
+	}
 
 	// done
 	log.Println("[MAIN] Server started.")
