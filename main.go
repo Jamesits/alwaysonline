@@ -13,6 +13,9 @@ import (
 
 var mainThreadWaitGroup = &sync.WaitGroup{}
 var disableDNSServer bool
+var localDNSPortString *string
+var localDNSPort int
+var localDNSPortInvaild bool
 var localResolveIp4AddressString *string
 var localResolveIp4Address net.IP
 var localResolveIp4Enabled bool
@@ -28,6 +31,7 @@ func main() {
 
 	// arguments parsing
 	flag.BoolVar(&disableDNSServer, "disable-dns-server", false, "disable DNS server")
+	localDNSPortString = flag.String("dns-port", "", "listening port of the DNS server")
 	localResolveIp4AddressString = flag.String("ipv4", "", "the IPv4 address to this server")
 	localResolveIp6AddressString = flag.String("ipv6", "", "the IPv6 address to this server")
 	localResolvePortString = flag.String("port", "", "listening port of server")
@@ -70,6 +74,17 @@ func main() {
 			localResolvePort = 80
 		}
 		log.Printf("[CONFIG] Listen port: %d\n", localResolvePort)
+	}
+
+	if len(*localDNSPortString) == 0 {
+		localDNSPort = 53
+		log.Println("[CONFIG] DNS port: 53")
+	} else {
+		localDNSPort, localDNSPortInvaild = parsePort(*localDNSPortString)
+		if localDNSPortInvaild || localDNSPort == 0 {
+			localDNSPort = 53
+		}
+		log.Printf("[CONFIG] DNS port: %d\n", localDNSPort)
 	}
 
 	// HTTP router setup
@@ -115,12 +130,12 @@ func main() {
 
 	if !disableDNSServer {
 		// DNS TCP server setup
-		dnsTcp1 := &dns.Server{Addr: ":53", Net: "tcp"}
+		dnsTcp1 := &dns.Server{Addr: fmt.Sprintf(":%d", localDNSPort), Net: "tcp"}
 		dnsTcp1.Handler = &dnsRequestHandler{}
 		go dnsTcp1.ListenAndServe()
 
 		// DNS UDP server setup
-		dnsUdp1 := &dns.Server{Addr: ":53", Net: "udp"}
+		dnsUdp1 := &dns.Server{Addr: fmt.Sprintf(":%d", localDNSPort), Net: "udp"}
 		dnsUdp1.Handler = &dnsRequestHandler{}
 		go dnsUdp1.ListenAndServe()
 	} else {
