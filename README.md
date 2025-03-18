@@ -54,9 +54,9 @@ www.archlinux.org (DO NOT hijack archlinux.org or other subdomains)
 capnet.elementary.io
 ```
 
-# Development
+## Development
 
-## Building
+Building locally:
 
 ```shell
 goreleaser build --snapshot --clean --single-target
