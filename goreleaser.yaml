@@ -15,10 +15,9 @@ builds:
     main: "."
     binary: "alwaysonline"
     mod_timestamp: "{{ .CommitTimestamp }}"
-    goos: ["linux", "darwin", "windows", "freebsd"]
-    goarch: ["amd64", "arm", "arm64"]
-    goarm: ["6", "7"]
-    goamd64: ["v1", "v2", "v3", "v4"]
+    goos: ["linux", "darwin", "windows"]
+    goarch: ["amd64", "arm64"]
+    goamd64: ["v3"]
     flags:
       - "-v"
       - "-trimpath"
