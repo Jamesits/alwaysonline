@@ -6,7 +6,7 @@ on:
       - renovate.json
   pull_request:
     branches:
-      - trunk
+      - master
     paths:
       - renovate.json
 jobs:

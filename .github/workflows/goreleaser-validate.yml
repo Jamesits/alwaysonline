@@ -3,10 +3,10 @@ name: "GoReleaser Validation"
 on:
   push:
     branches:
-      - trunk
+      - master
   pull_request:
     branches:
-      - trunk
+      - master
 
 env:
   GOPATH: /tmp/go
