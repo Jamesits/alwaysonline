@@ -1,0 +1,73 @@
+# IDEA auto formatter is causing trouble
+# @formatter:off
+version: 2
+
+before:
+  hooks:
+    - "go mod verify"
+
+env:
+  - "GO111MODULE=on"
+  - "CGO_ENABLED=0"
+
+builds:
+  - id: "alwaysonline"
+    main: "."
+    binary: "alwaysonline"
+    mod_timestamp: "{{ .CommitTimestamp }}"
+    goos: ["linux", "darwin", "windows", "freebsd"]
+    goarch: ["amd64", "arm", "arm64"]
+    goarm: ["6", "7"]
+    goamd64: ["v1", "v2", "v3", "v4"]
+    flags:
+      - "-v"
+      - "-trimpath"
+      - "-buildvcs=true"
+    asmflags:
+      - "all=-trimpath={{ .Env.GOPATH }}"
+    gcflags:
+      - "all=-trimpath={{ .Env.GOPATH }}"
+    ldflags:
+      - "-s"
+      - "-w"
+      - "-X \"main.versionMajor={{ .Major }}\""
+      - "-X \"main.versionMinor={{ .Minor }}\""
+      - "-X \"main.versionRevision={{ .Patch }}\""
+      - "-X \"main.versionGitCommitHash={{ .Commit }}\""
+      - "-X \"main.versionCompileTime={{ .CommitTimestamp }}\""
+    hooks:
+      post:
+        - "sh -c 'upx \"{{ .Path }}\" || true'"
+        - "sudo setcap 'cap_net_bind_service=+ep' \"{{ .Path }}\""
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-next"
+
+archives:
+  - id: "release"
+    formats: ["tar.xz"]
+    wrap_in_directory: true
+
+dockers:
+  - dockerfile: "Dockerfile.goreleaser"
+    image_templates:
+      - jamesits/alwaysonline:latest
+      - jamesits/alwaysonline:{{ .Version }}
+
+checksum:
+  name_template: "checksums.txt"
+  algorithm: "sha256"
+
+changelog:
+  sort: "asc"
+  filters:
+    exclude:
+      - "^doc:"
+      - "^docs:"
+      - "^test:"
+      - "^cleanup:"
+      - "^ci:"
+      - "typo"
+      - "readme"
+      - "README"
+      - "comment"

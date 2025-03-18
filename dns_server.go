@@ -7,6 +7,7 @@ import (
 )
 
 const DNSDefaultTTL = 1
+
 type dnsRequestHandler struct{}
 
 func newDNSReplyMsg() *dns.Msg {
