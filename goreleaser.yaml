@@ -53,11 +53,14 @@ dockers:
     goamd64: v3
     image_templates:
       - jamesits/alwaysonline:{{ .Version }}-amd64
+    build_flag_templates:
+      - "--platform=linux/amd64"
   - dockerfile: "Dockerfile.goreleaser"
     goarch: arm64
     image_templates:
       - jamesits/alwaysonline:{{ .Version }}-arm64
-
+    build_flag_templates:
+      - "--platform=linux/arm64"
 docker_manifests:
   - name_template: "jamesits/alwaysonline:{{ .Version }}"
     image_templates:
