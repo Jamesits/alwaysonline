@@ -17,7 +17,7 @@ builds:
     mod_timestamp: "{{ .CommitTimestamp }}"
     goos: ["linux", "darwin", "windows"]
     goarch: ["amd64", "arm64"]
-    goamd64: ["v1", "v3"]
+    goamd64: ["v3"]
     flags:
       - "-v"
       - "-trimpath"
@@ -49,9 +49,20 @@ archives:
 
 dockers:
   - dockerfile: "Dockerfile.goreleaser"
+    goarch: amd64
+    goamd64: v3
     image_templates:
-      - jamesits/alwaysonline:latest
-      - jamesits/alwaysonline:{{ .Version }}
+      - jamesits/alwaysonline:{{ .Version }}-amd64
+  - dockerfile: "Dockerfile.goreleaser"
+    goarch: arm64
+    image_templates:
+      - jamesits/alwaysonline:{{ .Version }}-arm64
+
+docker_manifests:
+  - name_template: "jamesits/alwaysonline:{{ .Version }}"
+    image_templates:
+      - jamesits/alwaysonline:{{ .Version }}-amd64
+      - jamesits/alwaysonline:{{ .Version }}-arm64
 
 checksum:
   name_template: "checksums.txt"
