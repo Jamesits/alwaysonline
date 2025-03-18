@@ -3,6 +3,8 @@
 AlwaysOnline is a HTTP and DNS server which mocks a lot network/internet/portal detection servers.
 
 ![Works - On My Machine](https://img.shields.io/badge/Works-On_My_Machine-2ea44f)
+![Project Status - Feature Complete](https://img.shields.io/badge/Project_Status-Feature_Complete-2ea44f)
+[![Docker Image Version](https://img.shields.io/docker/v/jamesits/alwaysonline?label=Docker%20Hub)](http://hub.docker.com/r/jamesits/alwaysonline)
 
 ## Usage
 
