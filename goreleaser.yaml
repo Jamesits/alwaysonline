@@ -17,7 +17,7 @@ builds:
     mod_timestamp: "{{ .CommitTimestamp }}"
     goos: ["linux", "darwin", "windows"]
     goarch: ["amd64", "arm64"]
-    goamd64: ["v3"]
+    goamd64: ["v1", "v3"]
     flags:
       - "-v"
       - "-trimpath"
