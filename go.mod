@@ -2,7 +2,7 @@ module github.com/jamesits/alwaysonline/v2
 
 go 1.24.1
 
-require github.com/miekg/dns v1.1.64
+require github.com/miekg/dns v1.1.65
 
 require (
 	golang.org/x/mod v0.24.0 // indirect
