@@ -19,7 +19,7 @@ jobs:
         with:
           fetch-depth: 0
       - uses: actions/setup-go@v6
-      - uses: crazy-max/ghaction-upx@v3
+      - uses: crazy-max/ghaction-upx@v4
         with:
           install-only: true
       - uses: docker/login-action@v3
